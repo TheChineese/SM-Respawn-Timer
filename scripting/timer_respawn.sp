@@ -54,7 +54,7 @@ public Event_PlayerDeath_Callback(Handle:event, const String:name[], bool:dontBr
 
 }
 
-public OnClientStartTouchZoneType(client, MapZoneType:type)
+public OnClientStartTouchZoneType(client, MapZoneType:p_iType)
 {
 	if(p_iType == 0 && !g_bMapEnded && IsClientInGame(client))
 	{
@@ -62,7 +62,7 @@ public OnClientStartTouchZoneType(client, MapZoneType:type)
 	}
 }
 
-/** Stock from respawn.sp by bobbobagan - Removed logging**/
+/** Stock from respawn.sp by bobbobagan - Removed logging and DOD support**/
 public RespawnPlayer(target)
 {
 	decl String:game[40];
@@ -75,9 +75,5 @@ public RespawnPlayer(target)
 	else if (StrEqual(game, "tf"))
 	{
 		TF2_RespawnPlayer(target);
-	}
-	else if (StrEqual(game, "dod"))
-	{
-		SDKCall(g_hPlayerRespawn, target);
 	}
 }
