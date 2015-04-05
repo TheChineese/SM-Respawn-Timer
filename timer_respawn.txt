@@ -1,0 +1,22 @@
+"Updater"
+{
+	"Information"
+	{
+		"Version"
+		{
+			"Latest"	"0.0.1"
+		}
+		
+		"Notes"	"Changelog:"
+		"Notes"	"Alpha 0.1"
+	}
+	
+	"Files"
+	{
+		"Plugin"	"Path_SM/plugins/timer_respawn.smx"
+		"Plugin"	"Path_SM/translations/timer_respawn.phrases.txt"
+		"Plugin"	"Path_SM/translations/de/timer_respawn.phrases.txt"
+		
+		"Source"	"Path_SM/scripting/timer_respawn.sp"
+	}
+}
