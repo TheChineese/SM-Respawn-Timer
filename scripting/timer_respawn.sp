@@ -23,6 +23,8 @@ public Plugin myinfo =
 bool g_bMapEnded = false;
 bool g_bDebug = true;
 
+ConVar g_cRespawnTime = null;
+
 public void OnPluginStart()
 {
 
@@ -32,7 +34,9 @@ public void OnPluginStart()
 	}
 
 	HookEvent("player_death", Event_PlayerDeath_Callback);
-
+	
+	g_cRespawnTime = CreateConVar("sm_auto_respawn_time", "0.0", "Respawn Time");
+	
 }
 
 
@@ -50,7 +54,7 @@ public Action Event_PlayerDeath_Callback(Handle event, char[] name, bool dontBro
 		{
 			PrintToChatAll("[Timer Respawn] Respawning him");
 		}
-		RespawnPlayer(p_iClient);
+		CreateTimer(g_cRespawnTime.FloatValue, RespawnPlayer, p_iClient, TIMER_FLAG_NO_MAPCHANGE);
 	}
 
 }
@@ -72,10 +76,14 @@ public int OnClientStartTouchZoneType(int client, MapZoneType p_cType)
 }
 
 /** Stock from respawn.sp by bobbobagan - Removed logging and DOD support**/
-public void RespawnPlayer(int target)
+public Action RespawnPlayer(Handle Timer, int target)
 {
 	char game[40];
 	GetGameFolderName(game, sizeof(game));
+	if(GetClientTeam(target) < 2)
+	{
+		return;	
+	}
 
 	if (StrEqual(game, "cstrike") || StrEqual(game, "csgo"))
 	{
