@@ -22,7 +22,7 @@ public Plugin:myinfo =
 	url = "bitbucket.toastdev.de"
 }
 
-new bool:g_bMapEnded;
+bool g_bMapEnded = false;
 bool g_bDebug = true;
 
 public OnPluginStart()
