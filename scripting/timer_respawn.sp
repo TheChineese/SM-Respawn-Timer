@@ -11,9 +11,9 @@
 #undef REQUIRE_PLUGIN
 #include <updater>
 
-#define UPDATE_URL		"http://bitbucket.toastdev.de/sourcemod-plugins/raw/master/LRWar.txt"
+#define UPDATE_URL		"http://bitbucket.toastdev.de/sourcemod-plugins/raw/master/TimerRespawn.txt"
 
-public Plugin:myinfo = 
+public Plugin myinfo = 
 {
 	name = "Timer: Respawn",
 	author = "Toast",
@@ -41,7 +41,7 @@ public OnPluginStart()
     }
 }
 
-public OnLibraryAdded(const String:name[])
+public OnLibraryAdded(char[] name)
 {
     if (StrEqual(name, "updater"))
     {
@@ -49,10 +49,10 @@ public OnLibraryAdded(const String:name[])
     }
 }
 
-public Event_PlayerDeath_Callback(Handle:event, const String:name[], bool:dontBroadcast)
+public Action Event_PlayerDeath_Callback(Handle event, char[] name, bool dontBroadcast)
 {
-	new p_iUserid = GetEventInt(event, "userid");
-	new p_iClient = GetClientOfUserId(p_iUserid);
+	int p_iUserid = GetEventInt(event, "userid");
+	int p_iClient = GetClientOfUserId(p_iUserid);
 
 	if(g_bDebug)
 	{
@@ -87,7 +87,7 @@ public OnClientStartTouchZoneType(client, MapZoneType:p_iType)
 /** Stock from respawn.sp by bobbobagan - Removed logging and DOD support**/
 public RespawnPlayer(target)
 {
-	decl String:game[40];
+	char game[40];
 	GetGameFolderName(game, sizeof(game));
 
 	if (StrEqual(game, "cstrike") || StrEqual(game, "csgo"))
