@@ -8,11 +8,6 @@
 #include <tf2_stocks>
 #define REQUIRE_EXTENSIONS
 
-#undef REQUIRE_PLUGIN
-#include <updater>
-
-#define UPDATE_URL		"http://bitbucket.toastdev.de/sourcemod-plugins/raw/master/TimerRespawn.txt"
-
 #pragma semicolon 1
 #pragma newdecls required
 
@@ -33,24 +28,13 @@ public void OnPluginStart()
 
 	if(g_bDebug)
 	{
-		PrintToServer("[Timer Respawn] Hooking Death Event");
+		PrintToChatAll("[Timer Respawn] Hooking Death Event");
 	}
 
 	HookEvent("player_death", Event_PlayerDeath_Callback);
 
-	if (LibraryExists("updater"))
-    {
-        Updater_AddPlugin(UPDATE_URL);
-    }
 }
 
-public void OnLibraryAdded(const char[] name)
-{
-    if (StrEqual(name, "updater"))
-    {
-        Updater_AddPlugin(UPDATE_URL);
-    }
-}
 
 public Action Event_PlayerDeath_Callback(Handle event, char[] name, bool dontBroadcast)
 {
@@ -59,12 +43,12 @@ public Action Event_PlayerDeath_Callback(Handle event, char[] name, bool dontBro
 
 	if(g_bDebug)
 	{
-		PrintToServer("[Timer Respawn] Someone died");
+		PrintToChatAll("[Timer Respawn] Someone died. User: %N ", p_iClient);
 	}
 	if(!g_bMapEnded && IsClientInGame(p_iClient)){
 		if(g_bDebug)
 		{
-			PrintToServer("[Timer Respawn] Respawning him");
+			PrintToChatAll("[Timer Respawn] Respawning him");
 		}
 		RespawnPlayer(p_iClient);
 	}
@@ -75,13 +59,13 @@ public int OnClientStartTouchZoneType(int client, MapZoneType p_cType)
 {
 	if(g_bDebug)
 	{
-		PrintToServer("[Timer Respawn] Somone touched timer zone!");
+		PrintToChatAll("[Timer Respawn] Somone touched timer zone!");
 	}
 	if(p_cType == ZtEnd && !g_bMapEnded && IsClientInGame(client))
 	{
 		if(g_bDebug)
 		{
-			PrintToServer("[Timer Respawn] End Zone Touched! Map Ended!");
+			PrintToChatAll("[Timer Respawn] End Zone Touched! Map Ended!");
 		}
 		g_bMapEnded = true;
 	}
@@ -103,6 +87,6 @@ public void RespawnPlayer(int target)
 	}
 	else if(g_bDebug)
 	{
-		PrintToServer("[Timer Respawn] Respawn failed!");
+		PrintToChatAll("[Timer Respawn] Respawn failed!");
 	}
 }
