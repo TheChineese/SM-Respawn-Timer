@@ -61,7 +61,7 @@ public Action Event_PlayerDeath_Callback(Handle event, char[] name, bool dontBro
 	{
 		PrintToServer("[Timer Respawn] Someone died");
 	}
-	if(!g_bMapEnded && IsClientInGame(p_iClient) && IsPlayerAlive(p_iClient)){
+	if(!g_bMapEnded && IsClientInGame(p_iClient)){
 		if(g_bDebug)
 		{
 			PrintToServer("[Timer Respawn] Respawning him");
