@@ -101,4 +101,8 @@ public void RespawnPlayer(int target)
 	{
 		TF2_RespawnPlayer(target);
 	}
+	else if(g_bDebug)
+	{
+		PrintToServer("[Timer Respawn] Respawn failed!");
+	}
 }
