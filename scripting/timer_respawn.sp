@@ -21,7 +21,7 @@ public Plugin myinfo =
 	name = "Timer: Respawn",
 	author = "Toast",
 	description = "Auto respawn until someone finishs map",
-	version = "0.0.2",
+	version = "0.0.3",
 	url = "bitbucket.toastdev.de"
 }
 
