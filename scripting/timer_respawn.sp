@@ -21,7 +21,7 @@ public Plugin myinfo =
 }
 
 bool g_bMapEnded = false;
-bool g_bDebug = true;
+bool g_bDebug = false;
 
 ConVar g_cRespawnTime = null;
 
