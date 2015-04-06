@@ -18,14 +18,20 @@ public Plugin:myinfo =
 	name = "Timer: Respawn",
 	author = "Toast",
 	description = "Auto respawn until someone finishs map",
-	version = "0.0.1",
+	version = "0.0.2",
 	url = "bitbucket.toastdev.de"
 }
 
 new bool:g_bMapEnded;
+bool g_bDebug = true;
 
 public OnPluginStart()
 {
+
+	if(g_bDebug)
+	{
+		PrintToServer("[Timer Respawn] Hooking Death Event");
+	}
 
 	HookEvent("player_death", Event_PlayerDeath_Callback);
 
@@ -48,7 +54,15 @@ public Event_PlayerDeath_Callback(Handle:event, const String:name[], bool:dontBr
 	new p_iUserid = GetEventInt(event, "userid");
 	new p_iClient = GetClientOfUserId(p_iUserid);
 
+	if(g_bDebug)
+	{
+		PrintToServer("[Timer Respawn] Someone died");
+	}
 	if(!g_bMapEnded && IsClientInGame(p_iClient) && IsPlayerAlive(p_iClient)){
+		if(g_bDebug)
+		{
+			PrintToServer("[Timer Respawn] Respawning him");
+		}
 		RespawnPlayer(p_iClient);
 	}
 
@@ -56,8 +70,16 @@ public Event_PlayerDeath_Callback(Handle:event, const String:name[], bool:dontBr
 
 public OnClientStartTouchZoneType(client, MapZoneType:p_iType)
 {
+	if(g_bDebug)
+	{
+		PrintToServer("[Timer Respawn] Somone touched timer zone type: %i", p_iType);
+	}
 	if(p_iType == 0 && !g_bMapEnded && IsClientInGame(client))
 	{
+		if(g_bDebug)
+		{
+			PrintToServer("[Timer Respawn] End Zone Touched! Map Ended!");
+		}
 		g_bMapEnded = true;
 	}
 }
