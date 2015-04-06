@@ -13,6 +13,9 @@
 
 #define UPDATE_URL		"http://bitbucket.toastdev.de/sourcemod-plugins/raw/master/TimerRespawn.txt"
 
+#pragma semicolon 1
+#pragma newdecls required
+
 public Plugin myinfo = 
 {
 	name = "Timer: Respawn",
@@ -25,7 +28,7 @@ public Plugin myinfo =
 bool g_bMapEnded = false;
 bool g_bDebug = true;
 
-public OnPluginStart()
+public void OnPluginStart()
 {
 
 	if(g_bDebug)
@@ -41,11 +44,11 @@ public OnPluginStart()
     }
 }
 
-public OnLibraryAdded(char[] name)
+public void OnLibraryAdded(const char[] name)
 {
     if (StrEqual(name, "updater"))
     {
-        Updater_AddPlugin(UPDATE_URL)
+        Updater_AddPlugin(UPDATE_URL);
     }
 }
 
@@ -68,13 +71,13 @@ public Action Event_PlayerDeath_Callback(Handle event, char[] name, bool dontBro
 
 }
 
-public OnClientStartTouchZoneType(client, MapZoneType:p_iType)
+public int OnClientStartTouchZoneType(int client, MapZoneType p_cType)
 {
 	if(g_bDebug)
 	{
-		PrintToServer("[Timer Respawn] Somone touched timer zone type: %i", p_iType);
+		PrintToServer("[Timer Respawn] Somone touched timer zone!");
 	}
-	if(p_iType == 0 && !g_bMapEnded && IsClientInGame(client))
+	if(p_cType == ZtEnd && !g_bMapEnded && IsClientInGame(client))
 	{
 		if(g_bDebug)
 		{
@@ -85,7 +88,7 @@ public OnClientStartTouchZoneType(client, MapZoneType:p_iType)
 }
 
 /** Stock from respawn.sp by bobbobagan - Removed logging and DOD support**/
-public RespawnPlayer(target)
+public void RespawnPlayer(int target)
 {
 	char game[40];
 	GetGameFolderName(game, sizeof(game));
